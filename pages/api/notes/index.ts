@@ -4,7 +4,7 @@ import Note from "@/lib/server/models/Note";
 import { INote } from "@/types";
 
 export async function getNotes() {
-  return await Note.find();
+  return await Note.find().select("-content");
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -18,8 +18,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       res.status(500);
     }
   } else if (req.method === "GET") {
-    console.log("getting notes");
-
     try {
       const notes = await getNotes();
 
