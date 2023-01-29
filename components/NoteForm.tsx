@@ -9,7 +9,7 @@ export type NoteFormFields = {
 };
 
 type FormProps = {
-  initialValues: Partial<NoteFormFields>;
+  initialValues?: NoteFormFields;
   onSubmit: (data: NoteFormFields) => void;
 };
 
@@ -20,7 +20,7 @@ export default function NoteForm({ initialValues, onSubmit }: FormProps) {
     control,
     formState: { isValid, isDirty },
     reset,
-  } = useForm<NoteFormFields>({ defaultValues: initialValues });
+  } = useForm<NoteFormFields>({ values: initialValues });
 
   return (
     <div className="w-full h-full bg-white rounded-xl p-8">
@@ -55,7 +55,7 @@ export default function NoteForm({ initialValues, onSubmit }: FormProps) {
         </div>
 
         <textarea
-          className="flex flex-1 mt-6 outline-none h-80 resize-none"
+          className="flex flex-1 mt-6 outline-none h-80 resize-none w-full"
           placeholder="Add content here"
           {...register("content", { required: true })}
         />

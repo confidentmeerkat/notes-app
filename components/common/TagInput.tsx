@@ -13,6 +13,7 @@ export default function TagInput({ value: tags = [], onChange }: TagInputProps) 
       <div
         className="p-1 bg-purple-600 mx-1 rounded-sm text-white text-xs"
         onClick={() => onChange(tags.filter((_, idx) => idx !== index))}
+        key={index}
       >
         {tag}
       </div>

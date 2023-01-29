@@ -6,7 +6,7 @@ export default function CreateNote() {
 
   return (
     <div className="flex flex-1 py-4 pr-4 h-full">
-      <NoteForm onSubmit={createNote} initialValues={{}} />
+      <NoteForm onSubmit={createNote} />
     </div>
   );
 }

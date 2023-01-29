@@ -22,3 +22,23 @@ export const createNote = async (note: NoteFormFields) => {
     throw new Error(handleAPIError(error).message);
   }
 };
+
+export const getNote = async (id: string) => {
+  try {
+    const response = await Axios.get<INote>(`/api/notes/${id}`);
+
+    return response.data;
+  } catch (error) {
+    throw new Error(handleAPIError(error).message);
+  }
+};
+
+export const updateNote = async ({ id, ...data }: NoteFormFields & { id: string }) => {
+  try {
+    const response = await Axios.put<INote>(`/api/notes/${id}`, data);
+
+    return response.data;
+  } catch (error) {
+    throw new Error(handleAPIError(error).message);
+  }
+};
