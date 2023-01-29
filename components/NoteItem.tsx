@@ -14,7 +14,7 @@ export default function NoteItem({ item, selected }: { item: INote; selected?: b
       })}
     >
       <div className="flex grow flex-col items-start pl-4">
-        <caption className="text-xl text-purple-800 font-semibold">{item.title}</caption>
+        <h6 className="text-xl text-purple-800 font-semibold">{item.title}</h6>
 
         <p className="text-sm text-purple-400 mt-3">{dayjs(item.created_at).calendar()}</p>
       </div>
