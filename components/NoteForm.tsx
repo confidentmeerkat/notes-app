@@ -57,7 +57,7 @@ export default function NoteForm({ initialValues, onSubmit }: FormProps) {
         <textarea
           className="flex flex-1 mt-6 outline-none h-80 resize-none w-full"
           placeholder="Add content here"
-          {...register("content", { required: true })}
+          {...register("content", { required: true, minLength: 20, maxLength: 300 })}
         />
       </form>
     </div>
