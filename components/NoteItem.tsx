@@ -4,10 +4,16 @@ import dayjs from "dayjs";
 import calendar from "dayjs/plugin/calendar";
 import classNames from "classnames";
 import Link from "next/link";
+import { useDeleteNote } from "@/lib/hooks/useNotes";
+import { useRouter } from "next/router";
 
 dayjs.extend(calendar);
 
 export default function NoteItem({ item, selected }: { item: INote; selected?: boolean }) {
+  const router = useRouter();
+
+  const { mutate: deleteNote } = useDeleteNote();
+
   return (
     <Link href={`/notes/${item.id}`}>
       <div
@@ -21,7 +27,16 @@ export default function NoteItem({ item, selected }: { item: INote; selected?: b
           <p className="text-sm text-purple-400 mt-3">{dayjs(item.created_at).calendar()}</p>
         </div>
 
-        <div className="flex">
+        <div
+          className="flex"
+          onClick={() =>
+            deleteNote(item.id as string, {
+              onSuccess: () => {
+                router.push("/");
+              },
+            })
+          }
+        >
           <button>Delete</button>
         </div>
       </div>

@@ -3,8 +3,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 import Note from "@/lib/server/models/Note";
 import { INote } from "@/types";
 
-export async function getNotes() {
-  return await Note.find().select("-content");
+export async function getNotes(q?: string) {
+  return await Note.find({ content: { $regex: q, $options: "i" } }).select("-content");
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -18,8 +18,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       res.status(500);
     }
   } else if (req.method === "GET") {
+    const q = req.query.q as string;
+
     try {
-      const notes = await getNotes();
+      const notes = await getNotes(q || "");
 
       res.status(200).json(notes);
     } catch {

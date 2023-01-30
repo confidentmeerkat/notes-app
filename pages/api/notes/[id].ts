@@ -11,5 +11,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const updatedNote = await Note.findByIdAndUpdate(id, req.body, { new: true });
 
     res.status(200).json(updatedNote);
+  } else if (req.method === "DELETE") {
+    await Note.findByIdAndDelete(id);
+
+    res.status(200).json({ removed: id });
   }
 }

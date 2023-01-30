@@ -1,9 +1,10 @@
 import { INote } from "@/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createNote, getNote, getNotes, updateNote } from "../apis";
+import { useRouter } from "next/router";
+import { createNote, deleteNote, getNote, getNotes, updateNote } from "../apis";
 
-export default function useNotes() {
-  return useQuery(["notes"], getNotes);
+export default function useNotes(q: string) {
+  return useQuery(["notes", { q }], () => getNotes(q));
 }
 
 export function useCreateNote() {
@@ -11,10 +12,8 @@ export function useCreateNote() {
 
   return useMutation({
     mutationFn: createNote,
-    onSuccess(data) {
-      queryClient.setQueryData<INote[]>(["notes"], (notes) => {
-        return [...(notes || []), data];
-      });
+    onSuccess() {
+      queryClient.invalidateQueries(["notes"]);
     },
   });
 }
@@ -34,6 +33,20 @@ export function useUpdateNote() {
       });
 
       queryClient.invalidateQueries(["notes"]);
+    },
+  });
+}
+
+export function useDeleteNote() {
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
+  return useMutation({
+    mutationFn: deleteNote,
+    onSuccess(_, id) {
+      queryClient.invalidateQueries(["notes"]);
+      queryClient.removeQueries(["note", { id }]);
+      router.push("/");
     },
   });
 }
