@@ -19,7 +19,7 @@ export function useCreateNote() {
 }
 
 export function useNote(id: string) {
-  return useQuery(["note", { id }], () => getNote(id));
+  return useQuery(["note", { id }], () => getNote(id), { enabled: !!id });
 }
 
 export function useUpdateNote() {

@@ -5,8 +5,6 @@ import { useRouter } from "next/router";
 export default function Note() {
   const router = useRouter();
 
-  console.log(router.query.id);
-
   const { data: note, isFetched } = useNote(router.query.id as string);
   const { mutate: updateNote } = useUpdateNote();
 

@@ -1,10 +1,16 @@
 import { useRouter } from "next/router";
-import { FormEvent, useCallback, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 
 export default function SearchBar() {
   const router = useRouter();
 
   const [q, setQ] = useState("");
+
+  useEffect(() => {
+    if (router.query.q) {
+      setQ(router.query.q as string);
+    }
+  }, [router]);
 
   const handleSubmit = useCallback(
     (e: FormEvent) => {
